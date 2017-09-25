@@ -9,7 +9,7 @@ namespace Treyza.SimpleTcpServer
     {
         private readonly ServerListener _listener;
 
-        public byte Delimiter { get; set; }
+        public byte Delimiter { get; set; } = 13;
 
         public event EventHandler<ClientEventArgs> OnConnected;
         public event EventHandler<ClientEventArgs> OnDisconnected;
