@@ -104,6 +104,12 @@ namespace Treyza.SimpleTcpServer
                         queuedMsg.AddRange(nextByte);
                     }
                 }
+
+                if (bytesReceived.Count > 0)
+                {
+                    var msg = Encoding.ASCII.GetString(queuedMsg.ToArray());
+                    _tcpServer.FireMessageReceived(_tcpServer, client, msg);
+                }
                 
 
             }
