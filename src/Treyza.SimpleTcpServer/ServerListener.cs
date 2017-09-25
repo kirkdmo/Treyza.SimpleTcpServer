@@ -97,6 +97,7 @@ namespace Treyza.SimpleTcpServer
 
                         
                         queuedMsg.Clear();
+                        bytesReceived.Clear();
 
                     }
                     else
