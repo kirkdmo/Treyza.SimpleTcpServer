@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Treyza.SimpleTcpServer.Events;
 
 namespace Treyza.SimpleTcpServer
@@ -21,33 +22,28 @@ namespace Treyza.SimpleTcpServer
             _listener = new ServerListener(address, port, this);    
         }
 
-        public void Start()
+        public async Task Start()
         {
-            _listener.Start();
+            await _listener.Start();
         }
 
-        public void Stop()
+        public async Task Stop()
         {
-            _listener.Stop();
+            await _listener.Stop();
         }
 
         public void FireClientDisconnected(object sender, TcpClient client)
         {
-
-
-
             OnDisconnected?.Invoke(this, new ClientEventArgs { Client = client});
         }
 
         public void FireClientConnected(object sender, TcpClient client)
         {
             OnConnected?.Invoke(this, new ClientEventArgs{ Client = client});
-
         }
 
         public void FireMessageReceived(object sender, TcpClient client, string message)
         {
-
             OnMessage?.Invoke(this, new MessageEventArgs { Client = client, Message =  message});
         }
 

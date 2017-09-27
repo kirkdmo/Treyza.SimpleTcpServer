@@ -13,35 +13,26 @@ namespace Treyza.SimpleTcpServer
         private readonly ITcpServer _tcpServer;
         private readonly TcpListener _listener;
         private CancellationTokenSource _cancellationToken;
-
         
-
         public ServerListener(IPAddress address, int port, ITcpServer tcpServer)
         {
-            
-
             _tcpServer = tcpServer;
             _listener = new TcpListener(address, port);
-            
-            
         }
 
 
-        public  void Start()
+        public async Task Start()
         {
-
             _cancellationToken = new CancellationTokenSource();
             _listener.Start();
 
-            Task.Run(async () => await ListenerLoop());
-
-
+            await ListenerLoop();
         }
 
-        public void Stop()
+        public async Task Stop()
         {
             _listener.Stop();
-            _cancellationToken.Cancel();
+            await Task.Run(() =>_cancellationToken.Cancel());
             
 
         }
@@ -56,7 +47,7 @@ namespace Treyza.SimpleTcpServer
                 client.LingerState = lingerOption;
                 _tcpServer.FireClientConnected(_tcpServer, client);
 
-                Task.Run(async () => await ReadLoop(client));
+                 ReadLoop(client);
             }
         }
 
